@@ -4,16 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Qlik Cloud Embedding Test</title>
-
-  <!-- Qlik Embed: carica la libreria dal tuo tenant -->
-  <script
-    crossorigin="anonymous"
-    type="application/javascript"
-    src="https://TUO-TENANT.eu.qlikcloud.com/resources/assets/external/requirejs/require.js"
-  ></script>
-
   <style>
     body { font-family: sans-serif; padding: 2rem; background: #f5f5f5; }
+    h1 { color: #333; }
     .qlik-container {
       width: 100%;
       height: 500px;
@@ -23,50 +16,55 @@
       background: white;
       margin-bottom: 2rem;
     }
-    qlik-embed {
+    .qlik-sel {
       width: 100%;
-      height: 100%;
-      display: block;
+      height: 80px;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+      overflow: hidden;
     }
+    qlik-embed { width: 100%; height: 100%; display: block; }
   </style>
 </head>
 <body>
 
-  <h1>Test Qlik Cloud Embedding</h1>
+  <h1>Qlik Cloud — Test Embedding</h1>
 
-  <!-- Web Component nativo Qlik Embed -->
+  <!-- Barra selezioni -->
+  <div class="qlik-sel">
+    <qlik-embed
+      ui="analytics/selections"
+      app-id="602d6081-7475-4dc9-ad73-255807119025">
+    </qlik-embed>
+  </div>
+
+  <!-- Oggetto / grafico -->
   <div class="qlik-container">
     <qlik-embed
       ui="analytics/chart"
-      app-id="IL-TUO-APP-ID"
-      object-id="IL-TUO-OBJECT-ID"
-    ></qlik-embed>
-  </div>
-
-  <!-- Secondo oggetto (es. un filtro) -->
-  <div class="qlik-container" style="height: 120px;">
-    <qlik-embed
-      ui="analytics/selections"
-      app-id="IL-TUO-APP-ID"
-    ></qlik-embed>
+      app-id="602d6081-7475-4dc9-ad73-255807119025"
+      object-id="jvx">
+    </qlik-embed>
   </div>
 
   <script type="module">
-    // Configurazione tenant e Web Integration ID
-    const config = {
-      host: "TUO-TENANT.eu.qlikcloud.com",      // ← il tuo tenant
-      clientId: "IL-TUO-WEB-INTEGRATION-ID",    // ← da Management Console
-      redirectUri: window.location.href,
-      accessTokenStorage: "session",
-      autoRedirect: true,
-    };
+    const TENANT   = "2ckhrzb1n5yorxb.eu.qlikcloud.com";
+    const WEB_ID   = "cmZm1K7PPpAp92xb4HPnuMfvC_WOCN5o";
+    const REDIRECT = "https://antoniofalvowork-ai.github.io/qlik-embedding-test/";
 
-    // Carica il modulo qlik-embed
     const { default: connect } = await import(
-      `https://${config.host}/resources/assets/external/qlik-embed-web-components.esm.min.js`
+      `https://${TENANT}/resources/assets/external/qlik-embed-web-components.esm.min.js`
     );
 
-    await connect(config);
+    await connect({
+      host: TENANT,
+      clientId: WEB_ID,
+      redirectUri: REDIRECT,
+      accessTokenStorage: "session",
+      autoRedirect: true,
+    });
   </script>
 
 </body>
