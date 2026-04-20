@@ -3,73 +3,84 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <title>Qlik Cloud Embedding Test</title>
   <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f5f5f5; }
-    h1 { color: #333; }
-    .qlik-container {
-      width: 100%;
-      height: 500px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      overflow: hidden;
-      background: white;
-      margin-bottom: 2rem;
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      font-size: 14px;
+      background-color: #f5f5f5;
+      color: #333;
+    }
+    .container {
+      padding: 16px;
+    }
+    h1 {
+      color: #333;
+      margin-bottom: 1rem;
     }
     .qlik-sel {
       width: 100%;
       height: 80px;
       background: white;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin-bottom: 2rem;
+      border: 1px solid #bbb;
+      border-radius: 3px;
+      box-shadow: 1px 1px 10px rgba(0,0,0,0.1);
+      margin-bottom: 16px;
       overflow: hidden;
     }
-    qlik-embed { width: 100%; height: 100%; display: block; }
+    .viz {
+      width: 100%;
+      height: 500px;
+      background: white;
+      border: 1px solid #bbb;
+      border-radius: 3px;
+      box-shadow: 1px 1px 10px rgba(0,0,0,0.2);
+      position: relative;
+      box-sizing: border-box;
+    }
+    qlik-embed {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
   </style>
+
+  <!-- Libreria Qlik Embed da CDN ufficiale -->
+  <script
+    crossorigin="anonymous"
+    type="application/javascript"
+    src="https://cdn.jsdelivr.net/npm/@qlik/embed-web-components@1/dist/index.min.js"
+    data-host="https://2ckhrzb1n5yorxb.eu.qlikcloud.com"
+    data-client-id="cmZm1K7PPpAp92xb4HPnuMfvC_WOCN5o"
+    data-redirect-uri="https://antoniofalvowork-ai.github.io/qlik-embedding-test/"
+    data-auto-redirect="true"
+    data-access-token-storage="session"
+  ></script>
 </head>
 <body>
+  <div class="container">
+    <h1>Qlik Cloud — Test Embedding</h1>
 
-  <h1>Qlik Cloud — Test Embedding</h1>
+    <!-- Barra selezioni -->
+    <div class="qlik-sel">
+      <qlik-embed
+        ui="analytics/selections"
+        app-id="602d6081-7475-4dc9-ad73-255807119025">
+      </qlik-embed>
+    </div>
 
-  <!-- Barra selezioni -->
-  <div class="qlik-sel">
-    <qlik-embed
-      ui="analytics/selections"
-      app-id="602d6081-7475-4dc9-ad73-255807119025">
-    </qlik-embed>
+    <!-- Grafico -->
+    <div class="viz">
+      <qlik-embed
+        ui="analytics/chart"
+        app-id="602d6081-7475-4dc9-ad73-255807119025"
+        object-id="jvx"
+        theme="Sense Horizon">
+      </qlik-embed>
+    </div>
   </div>
-
-  <!-- Oggetto / grafico -->
-  <div class="qlik-container">
-    <qlik-embed
-      ui="analytics/chart"
-      app-id="602d6081-7475-4dc9-ad73-255807119025"
-      object-id="jvx"
-      theme="Sense Horizon"
-      iframe="true"
-      preview="true">
-    </qlik-embed>
-  </div>
-
-  <script type="module">
-    const TENANT   = "2ckhrzb1n5yorxb.eu.qlikcloud.com";
-    const WEB_ID   = "cmZm1K7PPpAp92xb4HPnuMfvC_WOCN5o";
-    const REDIRECT = "https://antoniofalvowork-ai.github.io/qlik-embedding-test/";
-
-    // Path aggiornato alla versione corrente di Qlik Cloud
-    const { default: connect } = await import(
-      `https://${TENANT}/resources/assets/external/qlik-embed/qlik-embed.esm.js`
-    );
-
-    await connect({
-      host: TENANT,
-      clientId: WEB_ID,
-      redirectUri: REDIRECT,
-      accessTokenStorage: "session",
-      autoRedirect: true,
-    });
-  </script>
-
 </body>
 </html>
