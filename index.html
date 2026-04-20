@@ -40,7 +40,7 @@
     </qlik-embed>
   </div>
 
-  <!-- Oggetto / grafico con codice corretto da Qlik -->
+  <!-- Oggetto / grafico -->
   <div class="qlik-container">
     <qlik-embed
       ui="analytics/chart"
@@ -57,8 +57,9 @@
     const WEB_ID   = "cmZm1K7PPpAp92xb4HPnuMfvC_WOCN5o";
     const REDIRECT = "https://antoniofalvowork-ai.github.io/qlik-embedding-test/";
 
+    // Path aggiornato alla versione corrente di Qlik Cloud
     const { default: connect } = await import(
-      `https://${TENANT}/resources/assets/external/qlik-embed-web-components.esm.min.js`
+      `https://${TENANT}/resources/assets/external/qlik-embed/qlik-embed.esm.js`
     );
 
     await connect({
